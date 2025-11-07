@@ -8,7 +8,9 @@ const runMigrate = async () => {
   }
 
   const sql = neon(process.env.DATABASE_URL);
-  const db = drizzle(sql);
+  
+  // Type assertion to fix Neon/Drizzle compatibility
+  const db = drizzle(sql as any);
 
   console.log("⏳ Running migrations...");
 
