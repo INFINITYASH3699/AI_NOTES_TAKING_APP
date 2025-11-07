@@ -6,7 +6,12 @@ import { notes } from "@/lib/db/schema"
 import { eq, and, desc, ilike } from "drizzle-orm"
 import { getSession } from "@/lib/auth/session"
 
-const notesRoutes = new Hono()
+// Define types for Hono context variables
+type Variables = {
+  userId: string
+}
+
+const notesRoutes = new Hono<{ Variables: Variables }>()
 
 // Middleware to check authentication
 notesRoutes.use("/*", async (c, next) => {

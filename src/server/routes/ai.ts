@@ -4,7 +4,11 @@ import { aiRequestSchema } from "@/lib/validations"
 import { summarizeNote, improveNote, generateTags } from "@/lib/ai/openai"
 import { getSession } from "@/lib/auth/session"
 
-const aiRoutes = new Hono()
+type Variables = {
+  userId: string
+}
+
+const aiRoutes = new Hono<{ Variables: Variables }>()
 
 // Middleware to check authentication
 aiRoutes.use("/*", async (c, next) => {
