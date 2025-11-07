@@ -26,15 +26,26 @@ export function NoteCard({ note, onDelete }: NoteCardProps) {
     router.push(`/notes/${note.id}`)
   }
 
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent) => {
+    // Prevent event bubbling to card
+    e.stopPropagation()
+    
     if (confirm("Are you sure you want to delete this note?")) {
       onDelete(note.id)
     }
   }
 
+  const handleCardClick = () => {
+    // Navigate to edit page when card is clicked
+    handleEdit()
+  }
+
   return (
-    <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-      <CardHeader onClick={handleEdit}>
+    <Card 
+      className="hover:shadow-lg transition-shadow cursor-pointer"
+      onClick={handleCardClick}
+    >
+      <CardHeader>
         <div className="flex items-start justify-between">
           <CardTitle className="text-xl line-clamp-1">{note.title}</CardTitle>
           <DropdownMenu>
@@ -44,11 +55,17 @@ export function NoteCard({ note, onDelete }: NoteCardProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleEdit}>
+              <DropdownMenuItem onClick={(e) => {
+                e.stopPropagation()
+                handleEdit()
+              }}>
                 <Edit className="h-4 w-4 mr-2" />
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDelete} className="text-destructive">
+              <DropdownMenuItem 
+                onClick={handleDelete} 
+                className="text-destructive"
+              >
                 <Trash2 className="h-4 w-4 mr-2" />
                 Delete
               </DropdownMenuItem>
@@ -60,13 +77,13 @@ export function NoteCard({ note, onDelete }: NoteCardProps) {
           {formatDate(note.createdAt)}
         </CardDescription>
       </CardHeader>
-      <CardContent onClick={handleEdit}>
+      <CardContent>
         <p className="text-sm text-muted-foreground line-clamp-3">
           {truncate(note.content, 150)}
         </p>
       </CardContent>
       {note.tags && note.tags.length > 0 && (
-        <CardFooter onClick={handleEdit}>
+        <CardFooter>
           <div className="flex flex-wrap gap-1">
             {note.tags.slice(0, 3).map((tag, index) => (
               <Badge key={index} variant="secondary" className="text-xs">
