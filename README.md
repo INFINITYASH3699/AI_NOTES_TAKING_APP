@@ -49,5 +49,5 @@ A modern, full-stack note-taking application with AI-powered features built with
 ### Step 1: Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/ai-note-taking-app.git
+git clone https://github.com/INFINITYASH3699/AI_NOTES_TAKING_APP.git
 cd ai-note-taking-app
