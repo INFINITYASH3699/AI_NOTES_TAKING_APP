@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 import { User } from "@/types";
 
-const secretKey = process.env.JWT_SECRET!;
+const secretKey = process.env.JWT_SECRET || "fallback-secret-key-for-build-only";
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: any) {
